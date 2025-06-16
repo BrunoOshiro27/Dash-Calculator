@@ -1,0 +1,11 @@
+[project]
+name = "plotly-dash-treino"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "dash>=3.0.4",
+    "pandas>=2.2.3",
+    "uvicorn>=0.34.2",
+]
