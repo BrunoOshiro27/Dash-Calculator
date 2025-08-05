@@ -5,13 +5,22 @@ import dash_bootstrap_components as dbc
 
 app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
 
-def get_layout():
-    button_style = {
-        "height": "60px",
-        "fontSize": "1.5rem",
-        "padding": "0.75rem 1rem",
-    }
+button_style = {
+    "height": "60px",
+    "fontSize": "1.5rem",
+    "padding": "0.75rem 1rem",
+}
+def create_button_row(symbols):
+    return dbc.Row([
+        dbc.Col(dbc.Button(
+            symbol,
+            id={"type": "button", "value": symbol},
+            color="primary" if symbol in "+-*/" else "secondary",
+            style=button_style
+        ), width=3) for symbol in symbols
+    ], className="mb-2 g-2")
 
+def get_layout():
     return dbc.Container(
         dbc.Card(
             dbc.CardBody([
@@ -20,37 +29,14 @@ def get_layout():
                 dcc.Input(
                     id="math_expression",
                     type="text",
-                    placeholder="ex: 2+2",
+                    placeholder="ex: 4+2",
                     style={"width": "100%", "height": "40px", "marginBottom": "20px", "borderRadius": "8px"},
                 ),
 
-                dbc.Row([
-                    dbc.Col(dbc.Button("7", color="secondary", style=button_style), width=3),
-                    dbc.Col(dbc.Button("8", color="secondary", style=button_style), width=3),
-                    dbc.Col(dbc.Button("9", color="secondary", style=button_style), width=3),
-                    dbc.Col(dbc.Button("/", color="primary", style=button_style), width=3),
-                ], className="mb-2 g-2"),
-
-                dbc.Row([
-                    dbc.Col(dbc.Button("4", color="secondary", style=button_style), width=3),
-                    dbc.Col(dbc.Button("5", color="secondary", style=button_style), width=3),
-                    dbc.Col(dbc.Button("6", color="secondary", style=button_style), width=3),
-                    dbc.Col(dbc.Button("*", color="primary", style=button_style), width=3),
-                ], className="mb-2 g-2"),
-
-                dbc.Row([
-                    dbc.Col(dbc.Button("1", color="secondary", style=button_style), width=3),
-                    dbc.Col(dbc.Button("2", color="secondary", style=button_style), width=3),
-                    dbc.Col(dbc.Button("3", color="secondary", style=button_style), width=3),
-                    dbc.Col(dbc.Button("-", color="primary", style=button_style), width=3),
-                ], className="mb-2 g-2"),
-
-                dbc.Row([
-                    dbc.Col(dbc.Button("0", color="secondary", style=button_style), width=3),
-                    dbc.Col(dbc.Button(".", color="secondary", style=button_style), width=3),
-                    dbc.Col(dbc.Button("C", color="warning", style=button_style), width=3),
-                    dbc.Col(dbc.Button("+", color="primary", style=button_style), width=3),
-                ], className="mb-4 g-2"),
+                create_button_row(["7", "8", "9", "/"]),
+                create_button_row(["4", "5", "6", "*"]),
+                create_button_row(["1", "2", "3", "-"]),
+                create_button_row(["0", ".", "C", "+"]),
 
                 dbc.Row(
                     dbc.Col(
