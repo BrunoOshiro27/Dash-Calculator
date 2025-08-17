@@ -30,7 +30,7 @@ def get_layout():
                     id="math_expression",
                     type="text",
                     placeholder="ex: 4+2",
-                    style={"width": "100%", "height": "40px", "marginBottom": "20px", "borderRadius": "8px"},
+                    style={"width": "100%", "height": "40px", "marginBottom": "20px", "paddingRight": "20px", "borderRadius": "8px","textAlign": "right"},
                 ),
 
                 create_button_row(["7", "8", "9", "/"]),
@@ -45,10 +45,7 @@ def get_layout():
                         width=12
                     ),
                     className="mb-3"
-                ),
-
-                html.Div(id="output_result", className="h4 text-center"),
-
+                ),    
             ]),
             style={
                 "backgroundColor": "#f8f9fa",

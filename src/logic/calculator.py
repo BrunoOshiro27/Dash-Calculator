@@ -2,7 +2,7 @@
 def evaluate_expression(expression: str) -> str:
     try:
         result = eval(expression, {"__builtins__": {}})
-        return f"Resultado: {result}"
+        return result
     except ZeroDivisionError:
         return "Erro: Não é possível dividir por zero."
     except SyntaxError:
