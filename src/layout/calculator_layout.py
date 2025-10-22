@@ -1,59 +1,34 @@
 # Layout principal da calculadora
-import dash
-from dash import html, dcc
+from dash import Dash, html, dcc
 import dash_bootstrap_components as dbc
+from layout import buttons_layout
 
-app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
-
-button_style = {
-    "height": "60px",
-    "fontSize": "1.5rem",
-    "padding": "0.75rem 1rem",
-}
-def create_button_row(symbols):
-    return dbc.Row([
-        dbc.Col(dbc.Button(
-            symbol,
-            id={"type": "button", "value": symbol},
-            color="primary" if symbol in "+-*/" else "secondary",
-            style=button_style
-        ), width=3) for symbol in symbols
-    ], className="mb-2 g-2")
+app = Dash(__name__, external_stylesheets=[dbc.themes.DARKLY])
 
 def get_layout():
     return dbc.Container(
         dbc.Card(
             dbc.CardBody([
-                html.H2("Calculadora", className="text-center mb-4"),
-
+                dbc.Label("Calculadora", class_name="h2 d-flex justify-content-center mb-4 text-dark"),
                 dcc.Input(
                     id="math_expression",
                     type="text",
                     placeholder="ex: 4+2",
-                    style={"width": "100%", "height": "40px", "marginBottom": "20px", "paddingRight": "20px", "borderRadius": "8px","textAlign": "right"},
+                    className="w-100 mb-3 d-flex justify-content-around rounded text-end"
                 ),
-
-                create_button_row(["7", "8", "9", "/"]),
-                create_button_row(["4", "5", "6", "*"]),
-                create_button_row(["1", "2", "3", "-"]),
-                create_button_row(["0", ".", "C", "+"]),
-
+                buttons_layout.create_button_row(["7", "8", "9", "/"]),
+                buttons_layout.create_button_row(["4", "5", "6", "*"]),
+                buttons_layout.create_button_row(["1", "2", "3", "-"]),
+                buttons_layout.create_button_row(["0", ".", "C", "+"]),
                 dbc.Row(
                     dbc.Col(
-                        dbc.Button("Calcular", id="calculate_button", color="success", style=button_style),
-                        className="d-grid",
-                        width=12
-                    ),
-                    className="mb-3"
-                ),    
+                        dbc.Button("Calcular", id="calculate_button", color="success"),
+                        class_name="w-100"
+                    )
+                )   
             ]),
-            style={
-                "backgroundColor": "#f8f9fa",
-                "width": "400px",
-                "margin": "auto",
-                "padding": "20px",
-                "borderRadius": "12px"
-            },
+            style={"width": "300px"},
+            class_name="bg-light p-2 rounded-4"
         ),
-        className="mt-5"
+        class_name="mt-5 d-flex justify-content-center bg-warning p-3 text-center"
     )
