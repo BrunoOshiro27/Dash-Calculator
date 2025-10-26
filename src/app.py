@@ -1,9 +1,12 @@
 # Ponto de entrada do Dash
 
 from dash import Dash
+import dash_bootstrap_components as dbc
 from dash import html
-from layout.calculator_layout import get_layout, app
+from layout.calculator_layout import get_layout
 import callbacks.calculator_callbacks  # importa os callbacks para registrar
+
+app = Dash(__name__, external_stylesheets=[dbc.themes.DARKLY])
 
 app.layout = html.Div(
     children=[get_layout()],
