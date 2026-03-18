@@ -1,8 +1,9 @@
 # Callbacks do Dash
 from dash.exceptions import PreventUpdate
-from logic.calculator import evaluate_expression, possible_expression
+from validation.calculator import evaluate_expression, possible_expression
 from dash import Input, Output, State, ALL, ctx, callback
 from loguru import logger
+from models.logic_model import MathExpression
 
 OPERATORS = {"+", "-", "*", "/"}
 
@@ -16,6 +17,7 @@ OPERATORS = {"+", "-", "*", "/"}
 def handle_buttons(_, __, current_value):
     triggered = ctx.triggered_id
     expr = str(current_value or "")
+    expression = MathExpression(math_expression = expr)
     if triggered == "calculate_button":
         logger.debug(type(expr))
         return str(evaluate_expression(expr))    # se for none, retorna uma string vazia
@@ -25,7 +27,7 @@ def handle_buttons(_, __, current_value):
         # reseta a calculadora
         if value == "C":
             return ""
-        # Impede de ter zero com operador em seguida
+        # Impede de ter uma expressão redundante
         if value in OPERATORS and evaluate_expression(expr) == 0:
             raise PreventUpdate
         # Impede começar com operador (exceto o "-")
@@ -40,5 +42,3 @@ def handle_buttons(_, __, current_value):
             if not possible_expression(new_expr):
                 raise PreventUpdate
     return new_expr
-
-
